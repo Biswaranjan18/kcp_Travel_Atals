@@ -6,7 +6,7 @@ const path = require("path");
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, "../service_account.json");
 
 const analyticsDataClient = new BetaAnalyticsDataClient();
-const propertyId = "YOUR_PROPERTY_ID"; // Replace with your GA4 Property ID
+const propertyId = "503023021"; // Replace with your GA4 Property ID
 
 // Controller function to get lifetime visitors
 exports.getLifetimeVisitors = async (req, res) => {
