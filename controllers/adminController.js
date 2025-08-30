@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
-const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30m' });
 
 // Create transporter for sending emails
 const transporter = nodemailer.createTransport({
