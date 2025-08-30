@@ -8,7 +8,6 @@ const errorHandler = require('./middlewares/errorHandler');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Admin = require('./models/adminModel.js');
-const analyticsRoutes = require('./routes/analyticsRoutes.js');
 
 dotenv.config();
 connectDB();
@@ -64,7 +63,6 @@ app.use('/api/packagebookings', packageRoutes);
 // createAdmin();
 
 app.use('/api/admin', adminRoutes);
-app.use("/api", analyticsRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
