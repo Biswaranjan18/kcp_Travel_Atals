@@ -14,4 +14,7 @@ router.get('/:phone', bookingController.getBookingsByPhone);
 // New route for updating status
 router.put('/:id/status', bookingController.updateBookingStatus);
 
+// Delete booking package by ID
+router.delete("/:id", bookingController.deleteBookingPackage);
+
 module.exports = router;

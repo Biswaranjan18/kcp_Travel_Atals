@@ -6,7 +6,7 @@ const User = require('../models/Usermodel');
 // Create a new booking
 exports.createBooking = async (req, res) => {
   try {
-    const { name, phone, email, packageTitle, car } = req.body;
+    const { name, phone, email, packageTitle, car ,price } = req.body;
 
     if (!name || !phone || !packageTitle || !car?.name || !car?.price) {
       return res.status(400).json({
@@ -26,6 +26,7 @@ exports.createBooking = async (req, res) => {
       user: user._id,
       packageTitle,
       car,
+      price
     });
 
     // Link booking to user
@@ -105,6 +106,32 @@ exports.updateBookingStatus = async (req, res) => {
     res.status(200).json({ success: true, data: booking });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// Delete booking package by ID (for admin)
+exports.deleteBookingPackage = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const bookingPackage= await Booking.findByIdAndDelete(id);
+
+    if (!bookingPackage) {
+      return res.status(404).json({
+        success: false,
+        error: "Booking package not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Booking package deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 };
 

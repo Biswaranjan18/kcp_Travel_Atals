@@ -1,4 +1,4 @@
-const Booking = require('../models/BookingCarmodel');
+const Booking = require('../models/BookingCarmodel.js');
 const User = require('../models/Usermodel.js');
 
 // Create a new booking
@@ -121,7 +121,7 @@ exports.updateBookingStatus = async (req, res) => {
 exports.updateBookingStatus = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status} = req.body;
+    const { status,notes } = req.body;
 
     if (!['pending', 'confirmed', 'cancelled', 'completed'].includes(status)) {
       return res.status(400).json({ success: false, error: 'Invalid status' });
@@ -129,7 +129,7 @@ exports.updateBookingStatus = async (req, res) => {
 
     const booking = await Booking.findByIdAndUpdate(
       id,
-      { status, updatedAt: Date.now() },
+      { status, notes , updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
 
@@ -140,5 +140,30 @@ exports.updateBookingStatus = async (req, res) => {
     res.status(200).json({ success: true, data: booking, message: 'Booking status updated successfully' });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+exports.deleteBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const booking = await Booking.findByIdAndDelete(id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        error: "Booking not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Booking deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 };

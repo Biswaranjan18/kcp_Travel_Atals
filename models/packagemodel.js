@@ -9,10 +9,13 @@ const bookingSchema = new mongoose.Schema({
   packageTitle: {
     type: String,
   },
+  price: {
+    type: Number,
+  },
   car: {
-    name: { type: String},
-    price: { type: Number},
-    features: [String],
+    name: { type: String, required: false},
+    price: { type: Number, required: false},
+    features: [{ type: String, required: false }],
   },
   status: {
     type: String,

@@ -7,8 +7,14 @@ const callbackSchema = new mongoose.Schema(
       type: String,
       required: true,
       match: [/^\d{10}$/, "Please enter a valid 10-digit phone number"]
-    }
+    },
+    status: {
+    type: String,
+    enum: ['pending', 'completed', 'failed'],
+    default: 'pending',
   },
+  },
+
   { timestamps: true }
 );
 

@@ -32,3 +32,62 @@ exports.getCallbacks = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+
+// Update callback status (for admin)
+exports.updateCallbackStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status} = req.body;
+
+    const callback = await Callback.findByIdAndUpdate(
+      id,
+      { status, updatedAt: Date.now() },
+      { new: true, runValidators: true }
+    );
+
+    if (!callback) {
+      return res.status(404).json({
+        success: false,
+        error: 'Callback not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: callback,
+      message: 'Callback status updated successfully',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+// Delete callback by ID (for admin)
+exports.deleteCallback = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const callback = await Callback.findByIdAndDelete(id);
+
+    if (!callback) {
+      return res.status(404).json({
+        success: false,
+        error: "Callback not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Callback deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};

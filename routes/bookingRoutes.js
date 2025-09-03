@@ -14,4 +14,7 @@ router.get('/user/:phone', bookingController.getUserBookings);
 // New route for updating status
 router.put('/:id/status', bookingController.updateBookingStatus);
 
+// Delete booking by ID
+router.delete("/:id", bookingController.deleteBooking);
+
 module.exports = router;
