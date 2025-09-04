@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 
-const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30m' });
+const generateToken = (id, email) => jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: '30m' });
 
 // Create transporter for sending emails
 const transporter = nodemailer.createTransport({
@@ -29,7 +29,7 @@ exports.loginAdmin = async (req, res) => {
     res.json({
       _id: admin._id,
       email: admin.email,
-      token: generateToken(admin._id)
+      token: generateToken(admin._id, admin.email)
     });
   } catch (error) {
     console.log(error);
