@@ -1,16 +1,15 @@
 const express = require("express");
 const { createCallback, getCallbacks,updateCallbackStatus, deleteCallback } = require("../controllers/callbackController.js");
-const { protect } = require('../middlewares/authMiddleware');
 
 
 const router = express.Router();
 
-router.post("/",protect, createCallback); // POST /api/callbacks
-router.get("/",protect, getCallbacks);    // GET /api/callbacks (for admin)
+router.post("/",createCallback); // POST /api/callbacks
+router.get("/",getCallbacks);    // GET /api/callbacks (for admin)
 // New route for updating status
-router.put('/:id/status',protect,updateCallbackStatus );
+router.put('/:id/status',updateCallbackStatus );
 // Delete callback by ID
-router.delete("/delate/:id",protect, deleteCallback);
+router.delete("/delate/:id",deleteCallback);
 
 module.exports = router;
 
